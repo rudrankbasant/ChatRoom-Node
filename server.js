@@ -11,7 +11,7 @@ const io = socketio(server);
 
 //Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
-const botName = 'Chat App Bot';
+const botName = 'Bot Admin';
 
 //Run when client connects
 io.on('connection', socket => {
@@ -22,7 +22,7 @@ io.on('connection', socket => {
         socket.join(user.room);
 
         //Welcome current user
-        socket.emit('message', formatMessage(botName, 'Welcome to Chat App'));
+        //socket.emit('message', formatMessage(botName, 'Welcome to Chat App'));
 
         //Broadcast when a user connects
         socket.broadcast.to(user.room).emit('message', formatMessage(botName,`${user.username} has joined the chat`));
@@ -46,7 +46,7 @@ io.on('connection', socket => {
             const user = userLeave(socket.id);
 
             if(user){
-                io.to(user.room).emit('message', formatMessage(botName,`${user.username} has left the chat`));
+                //io.to(user.room).emit('message', formatMessage(botName,`${user.username} has left the chat`));
 
                 //Send users and room info
                 io.to(user.room).emit('roomUsers', {
@@ -55,7 +55,7 @@ io.on('connection', socket => {
                 });
             } 
 
-            io.emit('message', formatMessage(botName,'A user has left the chat'));
+            //io.emit('message', formatMessage(botName,'A user has left the chat'));
         });
     
     
